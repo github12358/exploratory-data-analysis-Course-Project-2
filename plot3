@@ -3,12 +3,12 @@ b_emissions <- NEI %>%
   filter(fips == "24510") %>%
   group_by(year, type) %>% 
   
-# Sum emissions  
+# Sum emissions by year and type, save to df, and rename columns 
   summarise(Emissions=sum(Emissions))
-  
-# create plot
-b_em_plot <- ggplot(data = b_emissions, aes(x = factor(year), y = Emissions, fill = type, colore = "black")) +
+  b_em_plot <- ggplot(data = b_emissions, aes(x = factor(year), y = Emissions, fill = type, colore = "black")) +
   geom_bar(stat = "identity") + facet_grid(. ~ type) + 
   xlab("Year") + ylab(expression('PM'[2.5]*' Emission')) +
   ggtitle("Baltimore Emissions by Source Type") 
+  
+# create plot  
 print(b_em_plot)
