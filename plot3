@@ -1,0 +1,14 @@
+# Read data into DFs and subset data - select only readings from Baltimore, MD (fips == "24510")
+b_emissions <- NEI %>%
+  filter(fips == "24510") %>%
+  group_by(year, type) %>% 
+  
+# Sum emissions  
+  summarise(Emissions=sum(Emissions))
+  
+# create plot
+b_em_plot <- ggplot(data = b_emissions, aes(x = factor(year), y = Emissions, fill = type, colore = "black")) +
+  geom_bar(stat = "identity") + facet_grid(. ~ type) + 
+  xlab("Year") + ylab(expression('PM'[2.5]*' Emission')) +
+  ggtitle("Baltimore Emissions by Source Type") 
+print(b_em_plot)
